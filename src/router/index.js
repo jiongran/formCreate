@@ -1,3 +1,4 @@
+import { useAppStore } from '@/store/app'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -5,20 +6,55 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'index',
+      component: () => import('../views/index.vue')
+    },
+    {
+      path: '/vueFormCreate',
       name: 'vueFormCreate',
       component: () => import('../views/vueFormCreate.vue')
     },
     {
-      path: '/formDesign',
-      name: 'formDesign',
-      component: () => import('../views/formDesign.vue')
+      path: '/design',
+      name: 'design',
+      component: () => import('../views/vueFormDesign.vue')
     },
     {
-      path:'/vFormDesigner',
-      name: 'vFormDesigner',
-      component: () => import('../views/vFormDesigner.vue')
-    }
+      path: '/vFormDesign',
+      name: 'vFormDesign',
+      component: () => import('../views/vFormDesign.vue')
+    },
+    {
+      path: '/vFormCreate',
+      name: 'vFormCreate',
+      component: () => import('../views/vFormCreate.vue')
+    },
+    {
+      path: '/antdDesignFormCreate',
+      name: 'antdDesignFormCreate',
+      component: () => import('../views/AntdDesignFormCreate.vue')
+    },
+    {
+      path: '/antdDesignFormDesign',
+      name: 'antdDesignFormDesign',
+      component: () => import('../views/AntdDesignFormDesign.vue')
+    },
+    
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  // todo
+  const appStore = useAppStore()
+  appStore.setLoadingVal(true)
+  next()
+})
+
+
+router.afterEach(() => {
+  // todo
+  const appStore = useAppStore()
+  appStore.setLoadingVal(false)
 })
 
 export default router
