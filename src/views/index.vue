@@ -61,8 +61,8 @@ const editTree =()=>{
 <template>
   <div style="padding: 8px;">
     <el-row :gutter="20">
-      <el-col :span="8" style="margin-bottom: 12px;" v-for="(item,index) in list" :key="index">
-        <el-card style="max-width: 480px">
+      <el-col :span="8" class="mb-20" v-for="(item,index) in list" :key="index">
+        <el-card class="normal-card">
           <template #header>
             <div style="float: right;">
               <el-dropdown>
@@ -73,8 +73,12 @@ const editTree =()=>{
                 </span>
                 <template #dropdown>
                   <el-dropdown-menu>
-                    <el-dropdown-item @click="goToUrl(item.designUrl)">{{ item.designName }}</el-dropdown-item>
-                    <el-dropdown-item  @click="goToUrl(item.viewUrl)">{{ item.viewName }}</el-dropdown-item>
+                    <el-dropdown-item>
+                        <router-link :to="item.designUrl" target="_blank">{{ item.designName }}</router-link> 
+                      </el-dropdown-item>
+                    <el-dropdown-item>
+                        <router-link :to="item.viewUrl" target="_blank">{{ item.viewName }}</router-link> 
+                    </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
@@ -86,16 +90,54 @@ const editTree =()=>{
           </div>
         </el-card>
       </el-col>
-      <el-col :span="8"  style="margin-bottom: 12px;">
-        <el-card style="max-width: 480px">
+      <el-col :span="8"  class="mb-20">
+        <el-card class="normal-card">
+          <template #header>
+            富文本编辑器
+          </template>
+          <div>
+            <router-link to="/editor" target="_blank">前往使用</router-link> 
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8"  class="mb-20">
+        <el-card class="normal-card">
+          <template #header>
+            音乐播放器
+          </template>
+          <div>
+            <router-link to="/music" target="_blank">前往使用</router-link> 
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8"  class="mb-20">
+        <el-card class="normal-card">
           <template #header>
             store持久化与加密
           </template>
           <div>
-            tree {{ tree}} <el-button type="primary" @click="editTree">修改值</el-button>
+            tree {{ tree}} <el-button type="primary" size="small" @click="editTree">修改值</el-button>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8"  class="mb-20">
+        <el-card class="normal-card">
+          <template #header>
+            文件上传
+          </template>
+          <div>
+            开发中。。。
           </div>
         </el-card>
       </el-col>
     </el-row>
   </div>
 </template>
+<style lang="scss" scoped>
+.mb-20 {
+  margin-bottom: 20px;
+}
+.normal-card {
+  max-width: 480px
+}
+</style>"

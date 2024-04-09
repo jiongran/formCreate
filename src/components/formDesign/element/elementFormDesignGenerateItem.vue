@@ -128,6 +128,10 @@
           </el-upload>
         </template>
 
+        <template v-if="element.type == 'richtext-editor'">
+          <ElementEditor :value="element.options.defaultValue" @update:value="(val)=>{element.options.defaultValue=val}"></ElementEditor>
+        </template>
+
         <template v-if="element.type === 'cascader'">
           <el-cascader v-model="data" :options="element.options.remoteOptions" :placeholder="element.options.placeholder"
             :filterable="element.options.filterable" :clearable="element.options.clearable"
@@ -141,15 +145,17 @@
 </template>
 
 <script>
-import SvgIcon from '@/components/svg-icon/index.vue'
-import { computed, defineComponent } from 'vue'
-import EchartsBase from './echartsBase.vue'
+import SvgIcon from '@/components/svg-icon/index.vue';
+import { computed, defineComponent } from 'vue';
+import EchartsBase from './echartsBase.vue';
+import ElementEditor from './elementEditor.vue';
 
 export default defineComponent({
   name: 'ElementFormDesignGenerateItem',
   components: {
     SvgIcon,
-    EchartsBase
+    EchartsBase,
+    ElementEditor
   },
   props: {
     config: {

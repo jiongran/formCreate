@@ -329,15 +329,13 @@
         rules
       }
     },
-    // {
-    //   label: '富文本编辑器',
-    //   type: 'richtext-editor',
-    //   options: {
-    //     defaultValue: '',
-    //     width: '',
-    //     disabled: false
-    //   }
-    // },
+    {
+      label: '富文本编辑器',
+      type: 'richtext-editor',
+      options: {
+        defaultValue: 'This is a text',
+      }
+    },
     {
       label: '级联选择器',
       type: 'cascader',

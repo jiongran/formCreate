@@ -138,6 +138,11 @@
             </el-button>
           </el-upload>
         </template>
+
+        <template v-if="element.type == 'richtext-editor'">
+          <ElementEditor :value="element.options.defaultValue"  @update:value="(val)=>{element.options.defaultValue=val}"></ElementEditor>
+        </template>
+
         <template v-if="element.type === 'cascader'">
           <el-cascader :modelValue="element.options.defaultValue" :options="element.options.remoteOptions"
             :placeholder="element.options.placeholder" :filterable="element.options.filterable"
@@ -161,12 +166,14 @@
 import SvgIcon from '@/components/svg-icon/index.vue';
 import { defineComponent } from 'vue';
 import EchartsBase from './echartsBase.vue';
+import ElementEditor from './elementEditor.vue';
 
 export default defineComponent({
   name: 'ElementWidgetFormItem',
   components: {
     SvgIcon,
-    EchartsBase
+    EchartsBase,
+    ElementEditor
   },
   props: {
     config: {

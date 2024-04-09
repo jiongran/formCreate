@@ -39,7 +39,16 @@ const router = createRouter({
       name: 'antdDesignFormDesign',
       component: () => import('../views/AntdDesignFormDesign.vue')
     },
-    
+    {
+      path: '/editor',
+      name: 'editor',
+      component: () => import('../views/editor.vue')
+    },
+    {
+      path: '/music',
+      name: 'music',
+      component: () => import('../views/music.vue')
+    },
   ]
 })
 
