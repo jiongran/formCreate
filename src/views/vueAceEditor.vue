@@ -1,12 +1,16 @@
 <template>
+    <codeEditor  v-model:value="jsonEg" language="vue" theme="github"></codeEditor>
+</template>
+<script setup>
+import codeEditor from '@/components/formDesign/element/codeEditor.vue';
+import { ref } from 'vue';
+const defaultData = `<template>
   <div ref="aceRef" class="defaultWidth"  style="height: 350px;"></div>
 </template>
 
 <script>
 import ace from 'ace-builds'
-import 'ace-builds/src-noconflict/mode-javascript'
 import 'ace-builds/src-noconflict/mode-vue'
-import 'ace-builds/src-noconflict/theme-chrome'
 import 'ace-builds/src-noconflict/theme-github'
 import { defineComponent, onMounted, reactive, toRefs, watch } from "vue"
 export default defineComponent({
@@ -44,8 +48,8 @@ export default defineComponent({
       state.codeEditor = ace.edit(state.aceRef, {
         value: props.value,
         readOnly: props.readonly,
-        theme: `ace/theme/${props.theme}`,
-        mode: `ace/mode/${props.language}`,
+        theme: "ace/theme/github",
+        mode: "ace/mode/vue",
         enableSnippets: false,
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,
@@ -82,7 +86,7 @@ export default defineComponent({
     }
   }
 })
-</script>
+<\/script>
 <style lang="scss" scoped>
 .defaultHeight{
   height:  350px;
@@ -93,4 +97,7 @@ export default defineComponent({
 .defaultWidth{
   width: 100%;
 }
-</style>
+</style>`
+const jsonEg = ref(defaultData)
+
+</script>

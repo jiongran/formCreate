@@ -1,5 +1,5 @@
-import { useAppStore } from '@/store/app'
-import { createRouter, createWebHistory } from 'vue-router'
+import { useAppStore } from '@/store/app';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +40,16 @@ const router = createRouter({
       component: () => import('../views/AntdDesignFormDesign.vue')
     },
     {
+      path: '/nuxt',
+      name: 'nuxt',
+      component: () => import('../views/nuxt.vue')
+    },
+    {
+      path: '/vueAceEditor',
+      name: 'vueAceEditor',
+      component: () => import('../views/vueAceEditor.vue')
+    },
+    {
       path: '/editor',
       name: 'editor',
       component: () => import('../views/editor.vue')
@@ -48,6 +58,11 @@ const router = createRouter({
       path: '/music',
       name: 'music',
       component: () => import('../views/music.vue')
+    },
+    {
+      path: '/myView',
+      name: 'myView',
+      component: () => import('../views/myView.vue')
     },
   ]
 })

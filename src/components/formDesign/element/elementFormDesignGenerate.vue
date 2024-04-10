@@ -8,12 +8,12 @@
           <el-row type="flex" v-if="element.key" :key="element.key" :gutter="element.options.gutter ?? 0"
             :justify="element.options.justify" :align="element.options.align">
             <el-col v-for="(col, colIndex) of element.columns" :key="colIndex" :span="col.span ?? 0">
-              <ElGenerateFormItem v-for="colItem of col.list" :model="model" :key="colItem.key" :element="colItem"
+              <ElementFormDesignGenerateItem v-for="colItem of col.list" :model="model" :key="colItem.key" :element="colItem"
                 :config="data.config" :disabled="disabled" />
             </el-col>
           </el-row>
         </template>
-        <ElGenerateFormItem v-else :model="model" :key="element.key" :element="widgetForm.list[index]"
+        <ElementFormDesignGenerateItem v-else :model="model" :key="element.key" :element="widgetForm.list[index]"
           :config="data.config" :disabled="disabled" />
       </template>
     </el-form>
@@ -31,12 +31,12 @@ toRefs,
 watch
 } from 'vue';
 import { widgetForm } from '../config/element';
-import ElGenerateFormItem from './elementFormDesignGenerateItem.vue';
+import ElementFormDesignGenerateItem from './elementFormDesignGenerateItem.vue';
 
 export default defineComponent({
   name: 'ElementFormDesignGenerate',
   components: {
-    ElGenerateFormItem
+    ElementFormDesignGenerateItem
   },
   props: {
     data: {

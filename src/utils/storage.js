@@ -40,7 +40,27 @@ export function getItem(key, expiraTime = defaultTime, storage = defaultStorage)
   }
 }
 
+export function cacheMapToStorage(storageKey, map, storage = defaultStorage){
+  try {
+    const json = JSON.stringify(Array.from(map.entries()));
+    window[storage].setItem(defaultPrefix + storageKey, json);
+  } catch (error) {
+    debugger
+  }
+}
+
+export function retrieveMapFromStorage(storageKey,storage = defaultStorage){
+  const json = window[storage].getItem(defaultPrefix + storageKey);
+  if (json) {
+    const entries = JSON.parse(json);
+    return new Map(entries);
+  }
+  return new Map()
+}
+
 export default {
   setItem,
-  getItem
+  getItem,
+  cacheMapToStorage,
+  retrieveMapFromStorage
 }

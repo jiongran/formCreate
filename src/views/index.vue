@@ -1,12 +1,16 @@
 <script setup>
 import { useAppStore } from '@/store/app';
+import { retrieveMapFromStorage } from '@/utils/storage';
 import { MoreFilled } from '@element-plus/icons-vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { computed, reactive } from 'vue';
+import { computed, onBeforeMount, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const appStore = useAppStore();
 const router = useRouter();
+const postMessageStr = ref('');
+const openTime = ref(1);
+const map = retrieveMapFromStorage('mapStorage');
 const list = reactive([
   {
     name:'myView',
@@ -32,7 +36,20 @@ const list = reactive([
 ])
 
 const goToUrl = (name) =>{
-  router.push(name)
+  const resolve = router.resolve({
+    name
+  })
+  try {
+    map.set('page' + openTime.value, window.open(resolve.href, "_blank"))
+    if (openTime.value === 1) {
+      appStore.setOpenTime(2)
+    } else {
+      appStore.setOpenTime(1)
+    }
+    map.get('page' + openTime.value).close()
+  } catch (error) {
+
+  }
 }
 
 const tree = computed(()=>appStore.tree)
@@ -57,11 +74,45 @@ const editTree =()=>{
     })
 }
 
+const channelName = "openView";
+let listenChannel = null;
+// 关闭通道
+const closeChannel = () => {
+  if (listenChannel) listenChannel.close();
+}
+// 创建通道
+const createChannel = () => {
+    listenChannel = new BroadcastChannel(channelName);
+    if (listenChannel) {
+        listenChannel.onmessage = (res) => {
+          console.log('res',res)
+          postMessageStr.value = res.data
+            //关闭通道
+            // if (res.data == 'closeChannel') {
+            //     closeChannel();
+            // } else if(res.data == 'updateChannel'){
+
+            // }
+        }
+    }
+}
+
+onMounted(()=>{
+  if (!listenChannel) {
+    createChannel()
+  }
+})
+
+onBeforeMount(() => {
+  closeChannel()
+  listenChannel = null
+})
+
 </script>
 <template>
   <div style="padding: 8px;">
     <el-row :gutter="20">
-      <el-col :span="8" class="mb-20" v-for="(item,index) in list" :key="index">
+      <el-col :span="8" class="mb-10" v-for="(item,index) in list" :key="index">
         <el-card class="normal-card">
           <template #header>
             <div style="float: right;">
@@ -90,7 +141,37 @@ const editTree =()=>{
           </div>
         </el-card>
       </el-col>
-      <el-col :span="8"  class="mb-20">
+      <el-col :span="8"  class="mb-10">
+        <el-card class="normal-card">
+          <template #header>
+            只打开一次窗口（暂用方案）
+          </template>
+          <div>
+            <el-button type="primary" link size="small" @click="goToUrl('myView')">前往打开</el-button>  新窗口输入内容：{{ postMessageStr }}
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8"  class="mb-10">
+        <el-card class="normal-card">
+          <template #header>
+            vite vue3 ace编辑器配置
+          </template>
+          <div>
+            <router-link to="/vueAceEditor" target="_blank">前往使用</router-link> 
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8"  class="mb-10">
+        <el-card class="normal-card">
+          <template #header>
+            nuxt(环境打包配置)
+          </template>
+          <div>
+            <router-link to="/nuxt" target="_blank">前往使用</router-link> 
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8"  class="mb-10">
         <el-card class="normal-card">
           <template #header>
             富文本编辑器
@@ -100,7 +181,7 @@ const editTree =()=>{
           </div>
         </el-card>
       </el-col>
-      <el-col :span="8"  class="mb-20">
+      <el-col :span="8"  class="mb-10">
         <el-card class="normal-card">
           <template #header>
             音乐播放器
@@ -110,7 +191,7 @@ const editTree =()=>{
           </div>
         </el-card>
       </el-col>
-      <el-col :span="8"  class="mb-20">
+      <el-col :span="8"  class="mb-10">
         <el-card class="normal-card">
           <template #header>
             store持久化与加密
@@ -120,7 +201,7 @@ const editTree =()=>{
           </div>
         </el-card>
       </el-col>
-      <el-col :span="8"  class="mb-20">
+      <el-col :span="8"  class="mb-10">
         <el-card class="normal-card">
           <template #header>
             文件上传
@@ -134,8 +215,8 @@ const editTree =()=>{
   </div>
 </template>
 <style lang="scss" scoped>
-.mb-20 {
-  margin-bottom: 20px;
+.mb-10 {
+  margin-bottom: 10px;
 }
 .normal-card {
   max-width: 480px

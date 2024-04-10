@@ -11,13 +11,13 @@
             </div>
           </el-aside>
           <el-main class="center-container">
-            <ElCustomHeader v-bind="$props" @preview="() => (previewVisible = true)"
+            <ElementFormDesignHeader v-bind="$props" @preview="() => (previewVisible = true)"
               @uploadJson="() => (uploadJsonVisible = true)" @generateJson="handleGenerateJson"
               @generateCode="handleGenerateCode" @clearable="handleClearable">
               <slot name="header"></slot>
-            </ElCustomHeader>
+            </ElementFormDesignHeader>
             <el-main :class="{ 'widget-empty': widgetForm.list }">
-              <ElWidgetForm ref="widgetFormRef" v-model:widgetForm="widgetForm"
+              <ElementWidgetForm ref="widgetFormRef" v-model:widgetForm="widgetForm"
                 v-model:widgetFormSelect="widgetFormSelect" />
             </el-main>
           </el-main>
@@ -32,8 +32,8 @@
                 </div>
               </el-header>
               <el-main class="config-content">
-                <ElWidgetConfig v-show="configTab === 'widget'" v-model:select="widgetFormSelect" />
-                <ElFormConfig v-show="configTab === 'form'" v-model:config="widgetForm.config" />
+                <ElementWidgetConfig v-show="configTab === 'widget'" v-model:select="widgetFormSelect" />
+                <ElementFormDesignConfig v-show="configTab === 'form'" v-model:config="widgetForm.config" />
               </el-main>
             </el-container>
           </el-aside>
@@ -50,7 +50,7 @@
       </el-dialog>
 
       <el-dialog v-model="previewVisible" title="预览" :width="800">
-        <ElGenerateForm ref="generateFormRef" :data="widgetForm" />
+        <ElementFormDesignGenerate ref="generateFormRef" :data="widgetForm" />
         <template #footer>
           <el-button @click="handleReset">重置</el-button>
           <el-button type="primary" @click="handleGetData">获取数据</el-button>
@@ -103,22 +103,22 @@ import { advanceComponents, basicComponents, widgetForm as defaultWidgetForm, la
 import { copy, generateCode } from '../utils'
 import CodeEditor from './codeEditor.vue'
 import ComponentGroup from './componentGroup.vue'
-import ElFormConfig from './elementFormDesignConfig.vue'
-import ElGenerateForm from './elementFormDesignGenerate.vue'
-import ElCustomHeader from './elementFormDesignHeader.vue'
-import ElWidgetConfig from './elementWidgetConfig.vue'
-import ElWidgetForm from './elementWidgetForm.vue'
+import ElementFormDesignConfig from './elementFormDesignConfig.vue'
+import ElementFormDesignGenerate from './elementFormDesignGenerate.vue'
+import ElementFormDesignHeader from './elementFormDesignHeader.vue'
+import ElementWidgetConfig from './elementWidgetConfig.vue'
+import ElementWidgetForm from './elementWidgetForm.vue'
 
 export default defineComponent({
   name: 'ElementFormDesign',
   components: {
-    ElCustomHeader,
+    ElementFormDesignHeader,
     ComponentGroup,
     CodeEditor,
-    ElWidgetForm,
-    ElGenerateForm,
-    ElWidgetConfig,
-    ElFormConfig
+    ElementWidgetForm,
+    ElementFormDesignGenerate,
+    ElementWidgetConfig,
+    ElementFormDesignConfig
   },
   props: {
     preview: {
