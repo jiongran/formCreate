@@ -33,3 +33,20 @@ pnpm build
 ```sh
 pnpm lint
 ```
+
+
+```json
+{
+    "rewrites": [
+        { "source": "/:path*", "destination": "/index.html" }
+    ]
+} 
+```
+
+```json
+{
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/index.html" }
+    ]
+}  
+```
