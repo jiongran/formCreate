@@ -1,4 +1,6 @@
 import formCreate from '@form-create/element-ui';
+import { inject } from '@vercel/analytics';
+import { injectSpeedInsights } from '@vercel/speed-insights';
 import ElementPlus from 'element-plus'; //引入element-plus库
 import 'element-plus/dist/index.css'; //引入element-plus样式
 import { createPinia } from 'pinia';
@@ -22,4 +24,6 @@ app.use(VueFormCraft)
 app.use(VForm3)
 app.use(formCreate)
 app.use(router)
+inject()
+injectSpeedInsights()
 app.mount('#app')

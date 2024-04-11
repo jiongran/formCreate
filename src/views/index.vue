@@ -35,6 +35,39 @@ const list = reactive([
   }
 ])
 
+const projectList = reactive([
+  {
+    name:'chatGPT',
+    url:'',
+    desc:'开发中'
+  },
+  {
+    name:'vite vue3 ace编辑器配置',
+    url:'/vueAceEditor',
+    desc:'前往使用'
+  },
+  {
+    name:'nuxt(环境打包配置)',
+    url:'/nuxt',
+    desc:'前往使用'
+  },
+  {
+    name:'富文本编辑器',
+    url:'/editor',
+    desc:'前往使用'
+  },
+  {
+    name:'音乐播放器',
+    url:'/music',
+    desc:'前往使用'
+  },
+  {
+    name:'文件上传',
+    url:'',
+    desc:'开发中'
+  },
+])
+
 const goToUrl = (name) =>{
   const resolve = router.resolve({
     name
@@ -154,46 +187,6 @@ onBeforeMount(() => {
       <el-col :span="8"  class="mb-10">
         <el-card class="normal-card">
           <template #header>
-            vite vue3 ace编辑器配置
-          </template>
-          <div>
-            <router-link to="/vueAceEditor" target="_blank">前往使用</router-link> 
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8"  class="mb-10">
-        <el-card class="normal-card">
-          <template #header>
-            nuxt(环境打包配置)
-          </template>
-          <div>
-            <router-link to="/nuxt" target="_blank">前往使用</router-link> 
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8"  class="mb-10">
-        <el-card class="normal-card">
-          <template #header>
-            富文本编辑器
-          </template>
-          <div>
-            <router-link to="/editor" target="_blank">前往使用</router-link> 
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8"  class="mb-10">
-        <el-card class="normal-card">
-          <template #header>
-            音乐播放器
-          </template>
-          <div>
-            <router-link to="/music" target="_blank">前往使用</router-link> 
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8"  class="mb-10">
-        <el-card class="normal-card">
-          <template #header>
             store持久化与加密
           </template>
           <div>
@@ -201,13 +194,18 @@ onBeforeMount(() => {
           </div>
         </el-card>
       </el-col>
-      <el-col :span="8"  class="mb-10">
+      <el-col :span="8"  class="mb-10" v-for=" item in projectList" :key="item.name">
         <el-card class="normal-card">
           <template #header>
-            文件上传
+           {{ item.name }}
           </template>
           <div>
-            开发中。。。
+            <template v-if="item.url">
+              <router-link :to="item.url" target="_blank">{{ item.desc }}</router-link> 
+            </template>
+            <template v-else>
+              {{ item.desc }}
+            </template>
           </div>
         </el-card>
       </el-col>
@@ -219,6 +217,7 @@ onBeforeMount(() => {
   margin-bottom: 10px;
 }
 .normal-card {
-  max-width: 480px
+  max-width: 480px;
+  min-width: 160px;
 }
 </style>"

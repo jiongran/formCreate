@@ -39,6 +39,11 @@ const router = createRouter({
       name: 'antdDesignFormDesign',
       component: () => import('../views/AntdDesignFormDesign.vue')
     },
+    // {
+    //   path: '/chatGPT',
+    //   name: 'chatGPT',
+    //   component: () => import('../views/chatGPT.vue')
+    // },
     {
       path: '/nuxt',
       name: 'nuxt',
